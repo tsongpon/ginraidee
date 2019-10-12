@@ -6,7 +6,6 @@ import (
 )
 
 type SCGController struct {
-
 }
 
 func NewSCGController() *SCGController {
@@ -16,4 +15,3 @@ func NewSCGController() *SCGController {
 func (c *SCGController) Echo(ctx echo.Context) error {
 	return ctx.String(http.StatusOK, "The Siam Cement PCL")
 }
-

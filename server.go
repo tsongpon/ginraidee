@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/tsongpon/ginraidee/controller"
+	v1Controller "github.com/tsongpon/ginraidee/v1/controller"
 	"net/http"
 	"os"
 )
@@ -23,9 +24,12 @@ func main() {
 
 	ping := controller.NewPingController()
 	scg := controller.NewSCGController()
+	lineHookController := v1Controller.NewLineHookController()
 
 	e.GET("/scg", scg.Echo)
 	e.GET("/ping", ping.Ping)
 
-	e.Logger.Fatal(e.Start(":"+port))
+	e.POST("/v1/linehook", lineHookController.HandleMessage)
+
+	e.Logger.Fatal(e.Start(":" + port))
 }

@@ -6,7 +6,6 @@ import (
 )
 
 type RestaurantController struct {
-
 }
 
 func NewRestaurantController() *RestaurantController {
@@ -16,4 +15,3 @@ func NewRestaurantController() *RestaurantController {
 func (c *RestaurantController) Echo(ctx echo.Context) error {
 	return ctx.String(http.StatusOK, "The Siam Cement PCL")
 }
-
