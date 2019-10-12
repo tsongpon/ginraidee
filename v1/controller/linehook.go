@@ -5,6 +5,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/labstack/echo"
 	"github.com/tsongpon/ginraidee/v1/transport"
+	"log"
 	"net/http"
 )
 
@@ -37,8 +38,9 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 		Post("https://api.line.me/v2/bot/message")
 
 	if err != nil {
-		fmt.Print(err.Error())
+		log.Println(err.Error())
 	}
+	log.Println(rep.Status())
 
 	return ctx.String(http.StatusOK, "ok")
 }
