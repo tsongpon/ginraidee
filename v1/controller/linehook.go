@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/labstack/echo"
 	"github.com/tsongpon/ginraidee/adapter"
@@ -31,7 +32,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	places := placeAdapter.GetPlaces("restaurant", 13.828253, 100.5284507)
 	replyMessage := ""
 	for _, each := range places {
-		replyMessage = replyMessage + each.Name + "\n"
+		replyMessage = replyMessage + each.Name + "(" + fmt.Sprintf("%f", each.Ratting) + ")" + "\n"
 	}
 
 	reply := transport.LineReply{}
