@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 var accessToken = os.Getenv("LINE_TOKEN")
@@ -32,7 +33,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	places := placeAdapter.GetPlaces("restaurant", 13.828253, 100.5284507)
 	replyMessage := ""
 	for _, each := range places {
-		replyMessage = replyMessage + each.Name + "(" + fmt.Sprintf("%f", each.Ratting) + ")" + "\n"
+		replyMessage = replyMessage + each.Name + "(" + strconv.Itoa(int(each.Ratting)) + ")" + "\n"
 	}
 
 	reply := transport.LineReply{}
