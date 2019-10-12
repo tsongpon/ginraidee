@@ -34,7 +34,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 		SetBody(reply).
 		SetAuthToken(accessToken).
 		SetHeader("Content-Type", "application/json").
-		Post("https://api.line.me/v2/bot/message")
+		Post("https://api.line.me/v2/bot/message/reply")
 
 	if err != nil {
 		log.Println(err.Error())
