@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3d53cca4-e101-40b9-90f8-1d8b0eee1289" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/v1/controller/linehook.go" beforeDir="false" afterPath="$PROJECT_DIR$/v1/controller/linehook.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

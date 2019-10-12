@@ -30,7 +30,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	reply.Messages = []transport.ReplyMessage{message}
 
 	client := resty.New()
-	_, err := client.R().
+	rep, err := client.R().
 		SetBody(reply).
 		SetAuthToken(accessToken).
 		SetHeader("Content-Type", "application/json").
