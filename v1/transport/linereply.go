@@ -1,7 +1,7 @@
 package transport
 
 type LineReply struct {
-	ReplyToken string `json:"replyToken"`
+	ReplyToken string         `json:"replyToken"`
 	Messages   []ReplyMessage `json:"messages"`
 }
 
