@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+const accessToken = "zjkW2JmlEPq75g/injD6tPjYMKkovq8MmxtL7bXTsoJfmC70oeHwes8/T4b8gydWOjOgItYQYhc+IaVwfktMR/P6J0a3NpkU5z5rDn08a93ztSDGfAo/4kK8u8qNpRauSj9DIRIDAOTOo1M5KH6v4wdB04t89/1O/w1cDnyilFU="
+
 type LineHookController struct {
 }
 
@@ -30,7 +32,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	client := resty.New()
 	_, err := client.R().
 		SetBody(reply).
-		SetAuthToken(event.Events[0].ReplyToken).
+		SetAuthToken(accessToken).
 		SetHeader("Content-Type", "application/json").
 		Post("https://api.line.me/v2/bot/message")
 
