@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	log.Println("Starting server")
+	log.Println("Staring server")
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "5000"
