@@ -32,7 +32,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	places := placeAdapter.GetPlaces("restaurant", 13.828253, 100.5284507)
 	replyMessage := ""
 	for _, each := range places {
-		replyMessage = replyMessage + each.Name + "(" + strconv.Itoa(int(each.Ratting)) + ")" + "\n"
+		replyMessage = replyMessage + each.Name + " (" + strconv.Itoa(int(each.Ratting)) + ")" + "\n"
 	}
 
 	reply := transport.LineReply{}
