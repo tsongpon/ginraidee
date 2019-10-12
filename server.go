@@ -5,9 +5,15 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/tsongpon/ginraidee/controller"
 	"net/http"
+	"os"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -21,5 +27,5 @@ func main() {
 	e.GET("/scg", scg.Echo)
 	e.GET("/ping", ping.Ping)
 
-	e.Logger.Fatal(e.Start(":5000"))
+	e.Logger.Fatal(e.Start(":"+port))
 }
