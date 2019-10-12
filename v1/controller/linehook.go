@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/go-resty/resty/v2"
 	"github.com/labstack/echo"
 	"github.com/tsongpon/ginraidee/adapter"
