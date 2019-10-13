@@ -43,7 +43,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	reply := transport.LineReply{}
 	reply.ReplyToken = event.Events[0].ReplyToken
 	message := transport.ReplyMessage{}
-	message.Text = replyMessage
+	message.Text = truncateString(replyMessage, 2000)
 	message.Type = "text"
 	reply.Messages = []transport.ReplyMessage{message}
 
@@ -60,4 +60,15 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	log.Printf("response status %d, msg %s", rep.StatusCode(), rep.String())
 
 	return ctx.String(http.StatusOK, "ok")
+}
+
+func truncateString(str string, num int) string {
+	bnoden := str
+	if len(str) > num {
+		if num > 3 {
+			num -= 3
+		}
+		bnoden = str[0:num] + "..."
+	}
+	return bnoden
 }
