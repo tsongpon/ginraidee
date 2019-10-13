@@ -24,7 +24,8 @@ func main() {
 
 	placeAdapter := adapter.NewGooglePlaceAdapter()
 	geoCodeAdapter := adapter.NewGoogleGeoCodeAdapter()
-	ginRaiDeeService := service.NewGinRaiDeeService(placeAdapter, geoCodeAdapter)
+	lineAdapter := adapter.NewLineMessageAdapter()
+	ginRaiDeeService := service.NewGinRaiDeeService(placeAdapter, geoCodeAdapter, lineAdapter)
 	lineHookController := v1Controller.NewLineHookController(ginRaiDeeService)
 
 	e := echo.New()

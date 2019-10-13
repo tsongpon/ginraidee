@@ -1,10 +1,6 @@
-package transport
+package model
 
-type LineEventTransport struct {
-	Events []Event `json:"events"`
-}
-
-type Event struct {
+type LineEvent struct {
 	Type       string  `json:"type"`
 	ReplyToken string  `json:"replyToken"`
 	Source     Source  `json:"source"`
