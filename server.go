@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/tsongpon/ginraidee/adapter"
@@ -11,18 +10,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"database/sql"
-	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	dbPort     = 5432
-	user     = "postgres"
-	password = "pingu123"
-	dbname   = "postgres"
-)
+//const (
+//	host     = "localhost"
+//	dbPort     = 5432
+//	user     = "postgres"
+//	password = "pingu123"
+//	dbname   = "postgres"
+//)
 
 func main() {
 	log.Println("Staring server")
@@ -31,20 +27,20 @@ func main() {
 		port = "5000"
 	}
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, dbPort, user, password, dbname)
-
-	log.Println(psqlInfo)
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
+	//psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+	//	host, dbPort, user, password, dbname)
+	//
+	//log.Println(psqlInfo)
+	//db, err := sql.Open("postgres", psqlInfo)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer db.Close()
+	//
+	//err = db.Ping()
+	//if err != nil {
+	//	panic(err)
+	//}
 
 	ping := controller.NewPingController()
 	scg := controller.NewSCGController()
