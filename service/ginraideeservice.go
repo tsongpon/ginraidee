@@ -1,35 +1,54 @@
 package service
 
 import (
+	"github.com/google/uuid"
 	"github.com/tsongpon/ginraidee/adapter"
 	"github.com/tsongpon/ginraidee/model"
 	"github.com/tsongpon/ginraidee/v1/transport"
 	"strconv"
+	"time"
 )
 
 const maximumLineMessageLength = 2000
 
 type GinRaiDeeService struct {
-	placeAdapter   adapter.PlaceAdapter
-	geoCodeAdapter adapter.GeoCodeAdapter
-	lineAdapter    adapter.MessageAdapter
+	placeAdapter         adapter.PlaceAdapter
+	geoCodeAdapter       adapter.GeoCodeAdapter
+	lineAdapter          adapter.MessageAdapter
+	searchHistoryAdapter adapter.SearchHistoryAdapter
 }
 
 func NewGinRaiDeeService(placeAdapter adapter.PlaceAdapter,
-	geoCodeAdapter adapter.GeoCodeAdapter, lineAdapter adapter.MessageAdapter) *GinRaiDeeService {
+	geoCodeAdapter adapter.GeoCodeAdapter, lineAdapter adapter.MessageAdapter,
+	searchHistoryAdapter adapter.SearchHistoryAdapter) *GinRaiDeeService {
+
 	service := new(GinRaiDeeService)
 	service.placeAdapter = placeAdapter
 	service.geoCodeAdapter = geoCodeAdapter
 	service.lineAdapter = lineAdapter
+	service.searchHistoryAdapter = searchHistoryAdapter
 	return service
 }
 
 func (s *GinRaiDeeService) HandleLineMessage(lineEvent model.LineEvent) error {
 	var err error
+
+	searchHistory := model.SearchHistory{
+		ID:      uuid.New().String(),
+		UserID:  lineEvent.Source.UserID,
+		Keyword: lineEvent.Message.Text,
+		Time:    time.Now(),
+	}
+	_, err = s.searchHistoryAdapter.Save(searchHistory)
+	if err != nil {
+		return err
+	}
+
 	location, err := s.geoCodeAdapter.GetLocation(lineEvent.Message.Text)
 	if err != nil {
 		return err
 	}
+	
 	restaurants, _, err := s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng, "")
 
 	var replyMessage string
