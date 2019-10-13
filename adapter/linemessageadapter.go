@@ -12,7 +12,6 @@ var accessToken = os.Getenv("LINE_TOKEN")
 var lineReplyEndpoint = "https://api.line.me/v2/bot/message/reply"
 
 type LineMessageAdapter struct {
-
 }
 
 func NewLineMessageAdapter() *LineMessageAdapter {

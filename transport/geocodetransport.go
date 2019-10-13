@@ -8,7 +8,7 @@ type GoogleGeoCodeTransport struct {
 type GeoCodeResult struct {
 	Geometry Geometry `json:"geometry"`
 	Name     string   `json:"formatted_address"`
-	PlaceID  string  `json:"place_id"`
+	PlaceID  string   `json:"place_id"`
 }
 
 type Geometry struct {

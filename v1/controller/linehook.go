@@ -11,7 +11,7 @@ import (
 )
 
 type LineHookController struct {
-	service *service.GinRaiDeeService
+	service     *service.GinRaiDeeService
 	lineAdapter *adapter.MessageAdapter
 }
 
@@ -36,10 +36,9 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	lineEvent.Source.UserID = eventTransport.Events[0].Source.UserID
 	lineEvent.ReplyToken = eventTransport.Events[0].ReplyToken
 
-	if err := c.service.GetRestaurants(lineEvent); err != nil {
+	if err := c.service.HandleLineMessage(lineEvent); err != nil {
 		return ctx.String(http.StatusInternalServerError, err.Error())
 	}
 
 	return ctx.String(http.StatusOK, "ok")
 }
-

@@ -28,6 +28,8 @@ func main() {
 	ginRaiDeeService := service.NewGinRaiDeeService(placeAdapter, geoCodeAdapter, lineAdapter)
 	lineHookController := v1Controller.NewLineHookController(ginRaiDeeService)
 
+	restaurantContoller := v1Controller.NewRestaurantController(ginRaiDeeService)
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -38,6 +40,7 @@ func main() {
 	e.GET("/scg", scg.Echo)
 	e.GET("/ping", ping.Ping)
 
+	e.GET("/v1/restaurants", restaurantContoller.ListRestaurants)
 	e.POST("/v1/linehook", lineHookController.HandleMessage)
 	e.Logger.Fatal(e.Start(":" + port))
 }

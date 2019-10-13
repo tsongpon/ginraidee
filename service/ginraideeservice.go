@@ -12,7 +12,7 @@ const maximumLineMessageLength = 2000
 type GinRaiDeeService struct {
 	placeAdapter   adapter.PlaceAdapter
 	geoCodeAdapter adapter.GeoCodeAdapter
-	lineAdapter adapter.MessageAdapter
+	lineAdapter    adapter.MessageAdapter
 }
 
 func NewGinRaiDeeService(placeAdapter adapter.PlaceAdapter,
@@ -24,13 +24,13 @@ func NewGinRaiDeeService(placeAdapter adapter.PlaceAdapter,
 	return service
 }
 
-func (s *GinRaiDeeService) GetRestaurants(lineEvent model.LineEvent) error {
+func (s *GinRaiDeeService) HandleLineMessage(lineEvent model.LineEvent) error {
 	var err error
 	location, err := s.geoCodeAdapter.GetLocation(lineEvent.Message.Text)
 	if err != nil {
 		return err
 	}
-	restaurants, err :=  s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng)
+	restaurants, _, err := s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng, "")
 
 	var replyMessage string
 	for _, each := range restaurants {
@@ -40,7 +40,7 @@ func (s *GinRaiDeeService) GetRestaurants(lineEvent model.LineEvent) error {
 			rating = " (" + strconv.Itoa(int(each.Rating)) + ")"
 		}
 		messageToAdd := each.Name + rating + "\n"
-		if len(messageToAdd) + len(replyMessage) <= maximumLineMessageLength {
+		if len(messageToAdd)+len(replyMessage) <= maximumLineMessageLength {
 			replyMessage = replyMessage + messageToAdd
 		} else {
 			break
@@ -60,4 +60,15 @@ func (s *GinRaiDeeService) GetRestaurants(lineEvent model.LineEvent) error {
 	}
 
 	return nil
+}
+
+func (s *GinRaiDeeService) GetRestaurants(address string, pageToken string) ([]model.Place, string, error) {
+	var err error
+	location, err := s.geoCodeAdapter.GetLocation(address)
+	if err != nil {
+		return nil, "", err
+	}
+	restaurants, pageToken, err := s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng, pageToken)
+
+	return restaurants, pageToken, nil
 }
