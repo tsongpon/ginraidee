@@ -42,11 +42,10 @@ func main() {
 	}
 	m.Steps(1)
 
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		dbHost, dbPort, dbUser, dbPassword, dbName)
+	//psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	//	dbHost, dbPort, dbUser, dbPassword, dbName)
 
-	log.Println(psqlInfo)
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		panic(err)
 	}

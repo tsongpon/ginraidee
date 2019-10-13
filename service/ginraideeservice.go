@@ -6,7 +6,6 @@ import (
 	"github.com/tsongpon/ginraidee/model"
 	"github.com/tsongpon/ginraidee/v1/transport"
 	"strconv"
-	"time"
 )
 
 const maximumLineMessageLength = 2000
@@ -37,7 +36,7 @@ func (s *GinRaiDeeService) HandleLineMessage(lineEvent model.LineEvent) error {
 		ID:      uuid.New().String(),
 		UserID:  lineEvent.Source.UserID,
 		Keyword: lineEvent.Message.Text,
-		Time:    time.Now(),
+		Time:    lineEvent.Timestamp,
 	}
 	_, err = s.searchHistoryAdapter.Save(searchHistory)
 	if err != nil {
