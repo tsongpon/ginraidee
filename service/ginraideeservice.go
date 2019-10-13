@@ -18,12 +18,12 @@ func NewGinRaiDeeService(placeAdapter adapter.PlaceAdapter, geoCodeAdapter adapt
 }
 
 func (s *GinRaiDeeService) GetRestaurants(address string) ([]model.Place, error) {
-
+	var err error
 	location, err := s.geoCodeAdapter.GetLocation(address)
 	if err != nil {
 		return nil, err
 	}
-	restaurants :=  s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng)
+	restaurants, err :=  s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng)
 
 	return restaurants, nil
 }
