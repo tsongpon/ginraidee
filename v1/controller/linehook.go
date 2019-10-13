@@ -57,7 +57,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	if err != nil {
 		log.Printf("error from line %s", err.Error())
 	}
-	log.Printf("response status %d", rep.StatusCode())
+	log.Printf("response status %d, msg %s", rep.StatusCode(), rep.String())
 
 	return ctx.String(http.StatusOK, "ok")
 }
