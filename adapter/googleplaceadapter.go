@@ -16,10 +16,10 @@ func NewGooglePlaceAdapter() *GooglePlaceAdapter {
 	return new(GooglePlaceAdapter)
 }
 
-func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lon float32) []model.Place {
+func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lng float32) []model.Place {
 	client := resty.New()
 
-	location := fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lon)
+	location := fmt.Sprintf("%f", lat) + "," + fmt.Sprintf("%f", lng)
 	resp, err := client.R().
 		SetQueryParams(map[string]string{
 			"location": location,
@@ -38,10 +38,10 @@ func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lon float3
 	if err != nil {
 		log.Printf("Unmarshal result error %s", err.Error())
 	}
-	var palces []model.Place
+	var places []model.Place
 	for _, each := range result.Results {
 		place := model.Place{each.Name, each.Rating}
-		palces = append(palces, place)
+		places = append(places, place)
 	}
-	return palces
+	return places
 }

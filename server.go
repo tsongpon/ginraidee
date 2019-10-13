@@ -3,7 +3,9 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/tsongpon/ginraidee/adapter"
 	"github.com/tsongpon/ginraidee/controller"
+	"github.com/tsongpon/ginraidee/service"
 	v1Controller "github.com/tsongpon/ginraidee/v1/controller"
 	"log"
 	"net/http"
@@ -17,16 +19,20 @@ func main() {
 		port = "5000"
 	}
 
+	ping := controller.NewPingController()
+	scg := controller.NewSCGController()
+
+	placeAdapter := adapter.NewGooglePlaceAdapter()
+	geoCodeAdapter := adapter.NewGoogleGeoCodeAdapter()
+	ginRaiDeeService := service.NewGinRaiDeeService(placeAdapter, geoCodeAdapter)
+	lineHookController := v1Controller.NewLineHookController(ginRaiDeeService)
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
-
-	ping := controller.NewPingController()
-	scg := controller.NewSCGController()
-	lineHookController := v1Controller.NewLineHookController()
 
 	e.GET("/scg", scg.Echo)
 	e.GET("/ping", ping.Ping)
