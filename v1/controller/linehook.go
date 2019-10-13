@@ -38,9 +38,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 
 	log.Printf("userID: %s", lineEvent.Source.UserID)
 
-	if err := c.service.HandleLineMessage(lineEvent); err != nil {
-		return ctx.String(http.StatusInternalServerError, err.Error())
-	}
+	go c.service.HandleLineMessage(lineEvent)
 
 	return ctx.String(http.StatusOK, "ok")
 }
