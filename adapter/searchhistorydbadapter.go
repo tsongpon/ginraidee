@@ -18,7 +18,7 @@ func NewSearchHistoryDBAdapter(db *sql.DB) *SearchHistoryDBAdapter {
 
 func (a *SearchHistoryDBAdapter) Save(history model.SearchHistory) (model.SearchHistory, error) {
 	log.Printf("data %v", history)
-	insert := "INSERT INTO searchhistory (id, userid, keyword, eventtime) VALUES ($1, $2, $3, $4)"
+	insert := "INSERT INTO searchhistory (id, userid, keyword, time) VALUES ($1, $2, $3, $4)"
 	stmt, err := a.db.Prepare(insert)
 	if err != nil {
 		panic(err.Error())
