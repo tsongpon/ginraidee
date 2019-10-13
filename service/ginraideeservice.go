@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+const maximumLineMessageLength = 2000
+
 type GinRaiDeeService struct {
 	placeAdapter   adapter.PlaceAdapter
 	geoCodeAdapter adapter.GeoCodeAdapter
@@ -30,16 +32,26 @@ func (s *GinRaiDeeService) GetRestaurants(lineEvent model.LineEvent) error {
 	}
 	restaurants, err :=  s.placeAdapter.GetPlaces("restaurant", location.Lat, location.Lng)
 
-	replyMessage := ""
+	var replyMessage string
 	for _, each := range restaurants {
-		replyMessage = replyMessage + each.Name + " (" + strconv.Itoa(int(each.Ratting)) + ")" + "\n"
+
+		var rating string
+		if each.Rating > 0.0 {
+			rating = " (" + strconv.Itoa(int(each.Rating)) + ")"
+		}
+		messageToAdd := each.Name + rating + "\n"
+		if len(messageToAdd) + len(replyMessage) <= maximumLineMessageLength {
+			replyMessage = replyMessage + messageToAdd
+		} else {
+			break
+		}
 		//replyMessage = replyMessage + each.MapLink + "\n\n"
 	}
 
 	reply := transport.LineReply{}
 	reply.ReplyToken = lineEvent.ReplyToken
 	message := transport.ReplyMessage{}
-	message.Text = truncateString(replyMessage, 2000)
+	message.Text = replyMessage
 	message.Type = "text"
 	reply.Messages = []transport.ReplyMessage{message}
 
@@ -48,15 +60,4 @@ func (s *GinRaiDeeService) GetRestaurants(lineEvent model.LineEvent) error {
 	}
 
 	return nil
-}
-
-func truncateString(str string, num int) string {
-	bnoden := str
-	if len(str) > num {
-		if num > 3 {
-			num -= 3
-		}
-		bnoden = str[0:num] + "..."
-	}
-	return bnoden
 }

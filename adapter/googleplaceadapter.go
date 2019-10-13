@@ -7,10 +7,12 @@ import (
 	"github.com/tsongpon/ginraidee/model"
 	"github.com/tsongpon/ginraidee/transport"
 	"log"
+	"os"
 )
 
 const defaultRedis = "5000"
 const mapLinkBasURL = "https://www.google.com/maps/place/?q=place_id:"
+var googlePlaceAPIKey = os.Getenv("GOOGLE_API_KEY")
 
 type GooglePlaceAdapter struct {
 }
@@ -28,7 +30,7 @@ func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lng float3
 			"location": location,
 			"type":     placeType,
 			"radius":   defaultRedis,
-			"key":      "AIzaSyBfGD0y888DZ8FUfpBjDCRVRhFimnG0z78",
+			"key":      googlePlaceAPIKey,
 		}).
 		SetHeader("Accept", "application/json").
 		Get("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
@@ -46,7 +48,7 @@ func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lng float3
 	var places []model.Place
 	for _, each := range result.Results {
 		mapLink := mapLinkBasURL + each.PlaceID
-		place := model.Place{Name: each.Name, Ratting: each.Rating, MapLink: mapLink}
+		place := model.Place{Name: each.Name, Rating: each.Rating, MapLink: mapLink}
 		places = append(places, place)
 	}
 	return places, nil

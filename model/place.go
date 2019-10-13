@@ -2,6 +2,6 @@ package model
 
 type Place struct {
 	Name    string  `json:"name"`
-	Ratting float32 `json:"ratting"`
+	Rating float32 `json:"rating"`
 	MapLink string  `json:"link"`
 }
