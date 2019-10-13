@@ -37,7 +37,7 @@ func (c *LineHookController) HandleMessage(ctx echo.Context) error {
 	replyMessage := ""
 	for _, each := range places {
 		replyMessage = replyMessage + each.Name + " (" + strconv.Itoa(int(each.Ratting)) + ")" + "\n"
-		replyMessage = replyMessage + each.MapLink + "\n\n"
+		//replyMessage = replyMessage + each.MapLink + "\n\n"
 	}
 
 	reply := transport.LineReply{}
