@@ -63,7 +63,6 @@ func (s *GinRaiDeeService) HandleLineMessage(lineEvent model.LineEvent) error {
 		} else {
 			break
 		}
-		//replyMessage = replyMessage + each.MapLink + "\n\n"
 	}
 
 	reply := transport.LineReply{}
