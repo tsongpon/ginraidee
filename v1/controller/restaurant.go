@@ -33,6 +33,7 @@ func (c *RestaurantController) ListRestaurants(ctx echo.Context) error {
 	var transports []transport.PlaceTransport
 	for _, each := range places {
 		t := v1Transport.PlaceTransport{
+			PlaceID: each.PlaceID,
 			Name: each.Name,
 			Link: each.MapLink,
 		}

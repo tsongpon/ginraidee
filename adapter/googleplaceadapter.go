@@ -50,7 +50,7 @@ func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lng float3
 	var places []model.Place
 	for _, each := range result.Results {
 		mapLink := mapLinkBasURL + each.PlaceID
-		place := model.Place{Name: each.Name, Rating: each.Rating, MapLink: mapLink}
+		place := model.Place{PlaceID:each.PlaceID ,Name: each.Name, Rating: each.Rating, MapLink: mapLink}
 		places = append(places, place)
 	}
 	return places, result.NextPageToken, nil

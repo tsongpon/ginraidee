@@ -1,8 +1,9 @@
 package transport
 
 type PlaceTransport struct {
-	Name string `json:"name"`
-	Link string `json:"link"`
+	PlaceID string `json:"placeId"`
+	Name    string `json:"name"`
+	Link    string `json:"link"`
 }
 
 type PlaceResponseTransport struct {
