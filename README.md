@@ -1,6 +1,6 @@
 # GinRaiDee  
   
-Restaurant finder service provide:  
+Restaurant finder service which provide:  
   
  - Line chatbot integration  
  - RESTFul provide restaurant information  
