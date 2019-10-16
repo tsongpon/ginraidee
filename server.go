@@ -56,7 +56,7 @@ func main() {
 		panic(err)
 	}
 
-	ping := controller.NewPingController()
+	ping := controller.NewPingController(db)
 	scg := controller.NewSCGController()
 
 	placeAdapter := adapter.NewGooglePlaceAdapter()

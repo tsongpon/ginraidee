@@ -14,6 +14,7 @@ const defaultRedis = "5000"
 const mapLinkBasURL = "https://www.google.com/maps/place/?q=place_id:"
 
 var googlePlaceAPIKey = os.Getenv("GOOGLE_API_KEY")
+var googlePlaceAPIEndpoint = os.Getenv("PLACE_API_ENDPOINT")
 
 type GooglePlaceAdapter struct {
 }
@@ -35,7 +36,7 @@ func (a *GooglePlaceAdapter) GetPlaces(placeType string, lat float32, lng float3
 			"pagetoken": pageToken,
 		}).
 		SetHeader("Accept", "application/json").
-		Get("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
+		Get(googlePlaceAPIEndpoint)
 
 	if err != nil {
 		log.Printf("get error %s", err.Error())

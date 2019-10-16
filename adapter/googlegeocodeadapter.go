@@ -11,6 +11,7 @@ import (
 )
 
 var googleGeoCodeAPIKey = os.Getenv("GOOGLE_API_KEY")
+var googleGeoCodeAPIEndpoint = os.Getenv("GEOCODE_ENDPOINT")
 
 type GoogleGeoCodeAdapter struct {
 }
@@ -28,7 +29,7 @@ func (g *GoogleGeoCodeAdapter) GetLocation(address string) (*model.Location, err
 			"key":     googleGeoCodeAPIKey,
 		}).
 		SetHeader("Accept", "application/json").
-		Get("https://maps.googleapis.com/maps/api/geocode/json")
+		Get(googleGeoCodeAPIEndpoint)
 
 	if err != nil {
 		log.Printf("get error %s", err.Error())
@@ -38,7 +39,6 @@ func (g *GoogleGeoCodeAdapter) GetLocation(address string) (*model.Location, err
 	if err != nil {
 		log.Printf("Unmarshal result error %s", err.Error())
 	}
-	log.Printf("result %v", result)
 	if len(result.Results) == 0 {
 		return nil, errors.New("location not found")
 	}
